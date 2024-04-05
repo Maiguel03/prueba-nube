@@ -14,7 +14,13 @@ type usuario struct {
 	Pass string 
 }
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func Login(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	enableCors(&w)
 	if r.Method == "POST" {
 		User := usuario{}
 		json.NewDecoder(r.Body).Decode(&User)
@@ -45,3 +51,4 @@ func main() {
 
 	server.ListenAndServe()
 }
+
