@@ -1,25 +1,47 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
+	"time"
+
+	"github.com/gorilla/mux"
 )
+
+type usuario struct {
+	User string 
+	Pass string 
+}
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
-		user := r.FormValue("nombre")
-		pass := r.FormValue("contrasenia")
-
-		log.Print("Usuario: ", user, "Contraseña: ", pass)
-		fmt.Fprint(w, "Si funcionó jajaja, eres gey si ves esto")
+		User := usuario{}
+		json.NewDecoder(r.Body).Decode(&User)
+		json.NewEncoder(w).Encode(User)
+		fmt.Println(User)
 		return
+	}
+
+	if r.Method == "GET" {
+		User := usuario{User: "miguel", Pass: "1234"}
+		json.NewEncoder(w).Encode(User)
 	}
 }
 
 func main() {
-	http.HandleFunc("/", Login)
+	router := mux.NewRouter()
 
-	log.Print("Servidor corriendo")
-	http.ListenAndServe("localhost:8080", nil)
+	router.HandleFunc("/", Login)
+
+	server := http.Server{
+		Addr:              ":8080",
+		Handler:           router,
+		ReadTimeout:       30 * time.Second,
+		ReadHeaderTimeout: 30 * time.Second,
+		WriteTimeout:      30 * time.Second,
+		IdleTimeout:       30 * time.Second,
+	}
+
+	server.ListenAndServe()
 }
