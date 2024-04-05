@@ -16,6 +16,8 @@ type usuario struct {
 
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS") // Especifica los métodos permitidos
+	(*w).Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept") // Especifica las cabeceras permitidas
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
