@@ -13,9 +13,6 @@ import (
 )
 
 func Registro(c *gin.Context) {
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
- 	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST")
- 	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	//Obtener datos del cliente
 	var Body models.Usuario
 
@@ -57,9 +54,6 @@ func Registro(c *gin.Context) {
 }
 
 func Login(c *gin.Context) {
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
- 	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST")
- 	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	//Obtener usuario y contraseña del cliente
 	var User struct{
 		User string `json:"userName" bindin:"required"`
