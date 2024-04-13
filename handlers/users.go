@@ -104,8 +104,7 @@ func Login(c *gin.Context) {
 	}
 
 	//Enviar respuesta
-	c.SetSameSite(http.SameSiteStrictMode)
-	c.SetCookie("Autorización", tokenString, 3600*24*7, "", "", false, true)
+	c.SetCookie("Autorizacion", tokenString, 3600*24*7, "", "", false, true)
 
 	c.JSON(http.StatusOK, gin.H{
 		"Token": tokenString,
