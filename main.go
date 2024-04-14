@@ -34,7 +34,7 @@ func main() {
 	
 	r.POST("/registro", handlers.Registro) 
 	r.POST("/login", handlers.Login)
-	r.GET("/validar", handlers.Validar)
+	r.GET("/validar", middleware.AuntenticarSesion ,handlers.Validar)
 	r.Run(":8080")
 
 }
