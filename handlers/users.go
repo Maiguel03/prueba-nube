@@ -111,9 +111,11 @@ func Login(c *gin.Context) {
 	})
 }
 
-func Validar (c *gin.Context){
+func Validar(c *gin.Context) {
+	user, _ := c.Get("user")
+
 	c.JSON(http.StatusOK, gin.H{
-		"Mensaje": "Sesión válida",
+		"Mensaje": user,
 	})
 
 }
