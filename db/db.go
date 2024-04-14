@@ -68,3 +68,32 @@ func Login(Usuario string) (error, string) {
 	}
 	return nil, HashContraseña
 }
+
+func ValidarLogin(Usuario interface{}) (error, models.Usuario) {
+	db, err := ConnectDB()
+	
+
+	if err != nil {
+		log.Print(err)
+		return err, models.Usuario{}
+	}
+	var user struct{
+		CI string 
+		Nombre string 
+		Apellido string 
+		User string 
+		Categoria string
+	}
+	err = db.QueryRow("select CI ,Nombre ,Apellido ,Usuario ,Categoria from usuario where Usuario = $1", Usuario).Scan(&user.CI, &user.Nombre, &user.Apellido, &user.User, &user.Categoria)
+
+	if err != nil {
+		if err == sql.ErrNoRows{
+		log.Print(err)
+		return err, models.Usuario{}
+		} else{
+			log.Print("Error al consulta la base de datos", err)
+			return err, models.Usuario{}
+		}
+	}
+	return nil, models.Usuario{User: user.User, Nombre: user.Nombre, Apellido: user.Apellido, CI: user.CI}
+}
