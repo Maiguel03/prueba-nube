@@ -3,6 +3,8 @@ package main
 import (
 	"net/http"
 	"prueba/handlers"
+	"prueba/middleware"
+
 
 	"github.com/gin-gonic/gin"
 )
